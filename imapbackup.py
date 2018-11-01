@@ -17,7 +17,6 @@ servername=""
 username=""
 localdir=""
 
-#exceptions=['Archive','Calendar','Outbox','Notes','History','Items','holidays','CS','IT']
 exceptions=['CS']
 mbox=[]
 def printhelp():
