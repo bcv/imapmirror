@@ -20,3 +20,4 @@ Each message when downloaded shows
 ! -> success
 . -> Failed
 
+**Please note: This is in NO WAY a fool proof code. This script is pre-alpha. **
