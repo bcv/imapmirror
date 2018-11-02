@@ -17,7 +17,7 @@ servername=""
 username=""
 localdir=""
 
-exceptions=['CS']
+exceptions=[]  #Folder names you do not want to be synced. TODO: add this to input options ?
 mbox=[]
 def printhelp():
 	print("help")
@@ -47,6 +47,8 @@ for opt, arg in opts:
 		username=arg
 	if opt == "-l":
 		localdir=arg
+		if not re.search('[/]$',localdir):
+			localdir=localdir+'/'
 
 
 		
