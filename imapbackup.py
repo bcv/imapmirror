@@ -20,7 +20,9 @@ localdir=""
 exceptions=[]  #Folder names you do not want to be synced. TODO: add this to input options ?
 mbox=[]
 def printhelp():
-	print("help")
+	print("-s <server name/ip> -u <user name>  -l <local directory>")
+	print("Output:")
+	print(" ! => Success \n . => Erroe ")
 	exit()
 
 def printerror(strv):
