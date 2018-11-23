@@ -57,6 +57,11 @@ for opt, arg in opts:
 
 #print("To copy ",username,"@",servername," to ",localdir)
 
+ignfil = open(os.getenv("HOME")+"/.imap-ignore","r")
+ignlist = ignfil.read().split('\n')
+
+#Start ...
+
 M = imaplib.IMAP4_SSL(servername)
 
 try:
@@ -74,6 +79,9 @@ for f in mlist:
 
 for mailfolder in mbox:
 	mailfoldername=mailfolder
+	if any(mailfoldername in s for s in ignlist):
+		continue
+
 	print("Processing ",mailfoldername)
 	rv,tot=M.select('"'+mailfolder+'"')
 	try:
