@@ -118,7 +118,7 @@ for mailfolder in mbox:
 	for f in msglist:
 		rv,mesg = M.fetch(f.encode('utf-8'),'(RFC822)')
 		try:
-			fp.add(mesg[0][1].decode('utf-8'))
+			fp.add(mesg[0][1].decode())
 			sys.stdout.write("!")
 		except:
 			sys.stdout.write(".")
