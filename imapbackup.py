@@ -16,11 +16,12 @@ import getpass,re;
 servername=""
 username=""
 localdir=""
+replacefile=False
 
 exceptions=[]  #Folder names you do not want to be synced. TODO: add this to input options ?
 mbox=[]
 def printhelp():
-	print("-s <server name/ip> -u <user name>  -l <local directory>")
+	print("-s <server name/ip> -u <user name>  -l <local directory>  -r <flag to set replace of a MDIR(default append)")
 	print("Output:")
 	print(" ! => Success \n . => Erroe ")
 	exit()
@@ -36,7 +37,7 @@ if len(sys.argv) < 2:
 
 #print("Args:",sys.argv)
 try:
- 	opts,args = getopt.getopt(sys.argv[1:],"s:u:l:")
+ 	opts,args = getopt.getopt(sys.argv[1:],"rs:u:l:")
 except:
 	printhelp()
 
@@ -51,6 +52,8 @@ for opt, arg in opts:
 		localdir=arg
 		if not re.search('[/]$',localdir):
 			localdir=localdir+'/'
+	if opt == "-r":
+		replacefile=True
 
 
 		
@@ -111,14 +114,16 @@ for mailfolder in mbox:
 	else:
 		fname=localdir+fname
 	#fp=open(fname,"w+")
-	fp=mailbox.mbox(fname)
+	if replacefile and os.path.exists(fname):
+		os.remove(fname)
+	fp=mailbox.mbox(fname,create=True)
 	rv,data=M.search(None,"ALL")
 	msglist=data[0].decode('utf-8').split()
 	mboxformat="";
 	for f in msglist:
 		rv,mesg = M.fetch(f.encode('utf-8'),'(RFC822)')
 		try:
-			fp.add(mesg[0][1].decode())
+			fp.add(mesg[0][1])
 			sys.stdout.write("!")
 		except:
 			sys.stdout.write(".")
